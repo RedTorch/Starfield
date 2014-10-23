@@ -1,6 +1,22 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class Starfield extends PApplet {
+
 Particle[] leDots = new Particle[200];
 int numchar=1;
-void setup()
+public void setup()
 {	
 	size(displayWidth-80,displayHeight-120);
     for(int i = 0; i < leDots.length; i++)
@@ -15,7 +31,7 @@ void setup()
 	noCursor();
 	frameRate(120);
 }
-void draw()
+public void draw()
 {
 	noStroke();
 	fill(0,0,0,50);
@@ -65,7 +81,7 @@ class NormalParticle implements Particle
 		int bdist = (int)((displayHeight-120)/2);
 		int cdist = (int)(x);
 		int ddist = (int)(y);
-		speed = (int(dist(adist,bdist,cdist,ddist))/10)+1;
+		speed = (PApplet.parseInt(dist(adist,bdist,cdist,ddist))/10)+1;
 		xSpeed = Math.cos(angle) * speed;
 		ySpeed = Math.sin(angle) * speed;
 		x = x + xSpeed;
@@ -116,7 +132,7 @@ class OddballParticle implements Particle
 		int bdist = (int)((displayHeight-120)/2);
 		int cdist = (int)(x);
 		int ddist = (int)(y);
-		speed = (int(dist(adist,bdist,cdist,ddist))/10)+1;
+		speed = (PApplet.parseInt(dist(adist,bdist,cdist,ddist))/10)+1;
 		xSpeed = Math.cos(angle) * speed;
 		ySpeed = Math.sin(angle) * speed;
 		x = x + xSpeed;
@@ -143,11 +159,20 @@ class BigOne extends OddballParticle
 	{
 		BigOne()
 		{
-			float inum = 1.3;
+			float inum = 1.3f;
 		}
 	}
-void keyPressed()
+public void keyPressed()
 {
 	numchar++;
 	System.out.println(numchar);
+}
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "Starfield" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
